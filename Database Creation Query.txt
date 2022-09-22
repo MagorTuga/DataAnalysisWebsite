@@ -1,0 +1,18 @@
+CREATE TABLE `item` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `link` varchar(200) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `price` double DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `item_condition` varchar(30) NOT NULL,
+  `country` varchar(10) DEFAULT NULL,
+    PRIMARY KEY (ID)
+);
+
+CREATE TABLE `search` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `item_ID` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `string` varchar(200) NOT NULL,
+    PRIMARY KEY (ID)
+);

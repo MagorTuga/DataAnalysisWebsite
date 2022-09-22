@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graphs</title>
+    <style>
+        .button
+        {
+            text-align: center;
+            font-family: sans-serif;
+            font-size: 24px;
+            width: 200px;
+            color: #000000;
+        }
+        body  
+        {
+            background-image: url("background.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: sans-serif;
+        }
+        .title{
+            text-align: center;
+            font-weight: bold;
+            font-family: sans-serif;
+            background-color: rgb(175, 175, 175);
+            color:black;
+        }
+        .content{
+            text-align: center;
+            font-family: sans-serif;
+        }
+        .scrolldiv
+        {
+            text-align: center;
+            font-family: sans-serif;
+            overflow: hidden;
+            overflow-y: scroll;
+            height: 800px;
+            width: 1300px;
+            background-color: white;
+            
+        }
+        .content:hover{
+            background-color: rgb(230, 230, 230);
+        }
+
+        .tabletitle{
+            text-align: center;
+            font-family: sans-serif;
+            overflow: hidden;
+            width: 1285px;
+            color:white;
+            background-color: white;
+        }
+        .leftdiv{
+            text-align: left;
+            font-family: sans-serif;
+            width: 1300px;
+            position:absolute;
+            bottom: 10px;
+            margin-left: 10px;
+        }
+        .rightdiv{
+            text-align: left;
+            font-family: sans-serif;
+            width: 550px;
+            height: 800px;
+            position:absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: white;
+        }
+        .return{
+            font-family: sans-serif;
+            position:absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgb(255, 255, 255);
+            font-size: 24px;
+
+        }
+        .myButton {
+            color: rgb(255, 255, 255); 
+            font-size: 30px; 
+            line-height: 30px; 
+            padding: 16px; 
+            border-radius: 10px; 
+            font-family: sans-serif; 
+            font-weight: normal; 
+            background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(20, 78, 117) 100%);  
+            border: 5px ridge rgb(32, 57, 164); 
+            display: inline-block;
+            position:absolute;
+            top: 5px;
+            right: 5px;
+        }
+        .averagepricetext{
+            color: white;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        }
+        .myButton:hover{
+            background: #1C6EA4; 
+        }
+        .myButton:active{
+            background: #144E75; 
+        }
+        th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        }
+
+    </style>
+</head>
+<body style="background-color:rgb(100, 100, 100);">
+
+    <a class="return" href="/">Return to index</a>
+
+    <div class="rightdiv">
+
+        <p>Listing type: <%=type%></p>
+        <p>Minimum: <%=min%></p>
+        <p>Maximum: <%=max%></p>
+        <p>Country: <%=cc%></p>
+        <p>Lowest price found: <%=currency%><%=lowest%></p>
+        <p>Highest price found: <%=currency%><%=highest%></p>
+        <p>Amount of data: <%=prices.length%></p>
+        <p>Results: <%=amount%></p>
+        <br>
+
+        <canvas id="myChart" width="400" height="400"></canvas>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            var table_dates = [];
+            var table_prices = [];
+            var amount = 0;
+
+            table_dates = '<%=table_dates%>'.split(",");
+            table_prices = '<%=table_prices%>'.split(",");
+            amount = <%=amount%>;
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: table_dates,
+                datasets: [{
+                    label: 'Price',
+                    data: table_prices
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        </script>
+
+        <p style="position:absolute; bottom:0">100520093<br>
+            Bachelor of Computer Science<br>
+            University of Derby 2021/2022</p>
+
+    </div>
+    
+    <div class="leftdiv">
+        <h1 class="averagepricetext">Average price for "<%=search%>": <%=currency%><%=average%></h1>
+
+        <table class="tabletitle" align="left" id="titletable">
+            <tr class="title">
+                <th style="width: 950px;">Listing Title</th>
+                <th style="width: 100px;">Price</th>
+                <th style="width: 100px;">Date</th>
+                <th style="width: 200px;">Item Condition</th>
+            </tr>
+        </table>
+        
+        <div class="scrolldiv">
+            <table align="center" id="maintable">
+                <% for(let i in names){ %>
+                <% if (i == amount) { break; } %>
+                <tr class="content">
+                    <td style="width: 950px;"align="left"><a href="<%=links[i]%>"><%=names[i]%></a></td>
+                    <td style="width: 100px;"><%=currency%><%=prices[i]%></td>
+                    <td style="width: 100px;"><%=dates[i]%></td>
+                    <td style="width: 200px;"><%=conditions[i]%></td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
