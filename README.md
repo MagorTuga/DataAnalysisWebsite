@@ -1,5 +1,7 @@
 # Data Analysis Website
 
+![Preview](https://github.com/MagorTuga/DataAnalysisWebsite/blob/main/preview.png?raw=true)
+
 Website used to analyze completed transactions over time by scraping eBay's search queries.
 
 Developed using Node.js, HTML, Javascript, PHP, and MySQL.
